@@ -15,7 +15,7 @@ const bestsellers = [
   { id: 6, name: 'Brownie Sundae', price: 169, veg: true, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600' },
 ];
 
-function Counter({ end, label }) {
+function Counter({ end, label, suffix = '' }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -29,7 +29,7 @@ function Counter({ end, label }) {
   useEffect(() => {
     if (!inView) return;
     let start = 0;
-    const duration = 2000;
+    const duration = 1800;
     const step = end / (duration / 16);
     const timer = setInterval(() => {
       start += step;
@@ -43,7 +43,9 @@ function Counter({ end, label }) {
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-5xl font-display font-bold text-tomato">{count}{end > 100 ? 'k+' : ''}</div>
+      <div className="text-5xl font-display font-bold text-tomato">
+        {count.toLocaleString()}{suffix}
+      </div>
       <div className="mt-2 opacity-80">{label}</div>
     </div>
   );
@@ -124,21 +126,73 @@ export default function Home() {
 
       <section className="py-20 px-4">
         <SectionTitle>Bestsellers</SectionTitle>
-        <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide">
-          {bestsellers.map((item) => (
-            <div key={item.id} className="snap-center flex-shrink-0 w-72">
-              <MenuCard item={item} />
-            </div>
+        <div className="relative max-w-6xl mx-auto">
+          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide px-2">
+            {bestsellers.map((item) => (
+              <div key={item.id} className="snap-center flex-shrink-0 w-72">
+                <MenuCard item={item} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-4 bg-mustard/5">
+        <SectionTitle>How We Build It</SectionTitle>
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          {[
+            { label: 'Sesame bun', emoji: '🍞' },
+            { label: 'House patty', emoji: '🥩' },
+            { label: 'Melted cheddar', emoji: '🧀' },
+            { label: 'Fresh lettuce & tomato', emoji: '🥬' },
+            { label: 'House sauce', emoji: '🥫' },
+            { label: 'Top bun', emoji: '🍞' },
+          ].map((layer, i) => (
+            <motion.div
+              key={layer.label}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="flex items-center justify-center gap-4 text-2xl font-display"
+            >
+              <span className="text-4xl">{layer.emoji}</span>
+              <span>{layer.label}</span>
+            </motion.div>
+          ))}
+          <div className="text-6xl mt-6">🍔</div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4">
+        <SectionTitle>What People Say</SectionTitle>
+        <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 max-w-6xl mx-auto">
+          {[
+            { name: 'Riya, Saket', text: 'Best masala chai in Hauz Khas. The crispy chicken burger is dangerous — I keep coming back.', stars: 5 },
+            { name: 'Aman, Hauz Khas', text: 'Vibes are perfect. Paneer wrap + cold coffee after work is my ritual now.', stars: 5 },
+            { name: 'Neha, Vasant Kunj', text: 'Delivery is actually 30 mins. Food arrives hot and the shakes are thick.', stars: 5 },
+            { name: 'Kabir, Green Park', text: 'Finally a place that does both proper chai and a solid burger. Love the energy.', stars: 4 },
+          ].map((t) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="snap-center flex-shrink-0 w-80 bg-white rounded-3xl p-6 shadow-lg border-2 border-mustard/40"
+            >
+              <div className="text-mustard mb-2">{'★'.repeat(t.stars)}</div>
+              <p className="italic">"{t.text}"</p>
+              <div className="mt-4 font-bold text-tomato">— {t.name}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       <section className="py-16 bg-mustard/10">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          <Counter end={50} label="Cups Served" />
+          <Counter end={50000} label="Cups Served" suffix="+" />
           <Counter end={4.7} label="★ on Zomato" />
           <div className="text-center"><div className="text-5xl font-display font-bold text-tomato">30</div><div className="mt-2">Min Delivery</div></div>
-          <div className="text-center"><div className="text-5xl font-display font-bold text-tomato">2019</div><div className="mt-2">Established</div></div>
+          <div className="text-center"><div className="text-5xl font-display font-bold text-tomato">2019</div><div className="mt-2">Since</div></div>
         </div>
       </section>
 

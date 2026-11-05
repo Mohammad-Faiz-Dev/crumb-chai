@@ -19,7 +19,6 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-chocolate text-cream mt-20">
-      {/* Wavy top */}
       <div className="absolute -top-12 left-0 right-0">
         <svg viewBox="0 0 1440 120" className="w-full" preserveAspectRatio="none">
           <path
@@ -49,8 +48,26 @@ export default function Footer() {
               <a href="https://www.zomato.com" target="_blank" rel="noreferrer" className="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold">Zomato</a>
             </div>
             <div className="mt-6 grid grid-cols-3 gap-2">
-              {[1,2,3,4,5,6].map(i => (
-                <div key={i} className="aspect-square bg-mustard/20 rounded-lg flex items-center justify-center text-xs">IG</div>
+              {[
+                'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200',
+                'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200',
+                'https://images.unsplash.com/photo-1550547660-d9450f859349?w=200',
+                'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200',
+                'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200',
+                'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=200',
+              ].map((src, i) => (
+                <a
+                  key={i}
+                  href="https://instagram.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="aspect-square rounded-lg overflow-hidden group relative"
+                >
+                  <img src={src} alt="Crumb & Chai" className="w-full h-full object-cover group-hover:scale-110 transition" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center transition">
+                    <Instagram className="text-white opacity-0 group-hover:opacity-100" size={20} />
+                  </div>
+                </a>
               ))}
             </div>
           </div>
